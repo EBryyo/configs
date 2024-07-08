@@ -23,6 +23,10 @@ Plug('nvim-telescope/telescope.nvim', {tag = '0.1.8'})
 
 Plug('nvim-lua/plenary.nvim')
 
+Plug('folke/tokyonight.nvim')
+
+Plug('whatyouhide/vim-lengthmatters')
+
 vim.call('plug#end')
 
 
@@ -48,6 +52,11 @@ vim.opt.cc = "81"
 vim.opt.list = true
 vim.opt.listchars = { tab = "> ", trail = "~" }
 vim.opt.expandtab = true
+
+-- Theme
+vim.cmd.colorscheme("tokyonight-night")
+
+-- PLUGINS
 
 -- Treesitter and Treesitter context
 require'nvim-treesitter.configs'.setup {
@@ -139,21 +148,34 @@ local on_attach = function(client, bufnr)
 
     require("clangd_extensions.inlay_hints").setup_autocmd()
     require("clangd_extensions.inlay_hints").set_inlay_hints()
-    vim.api.nvim_create_autocmd({"TextChanged", "InsertLeave", "BufEnter"}, {callback = require("clangd_extensions.inlay_hints").set_inlay_hints})
+    --vim.api.nvim_create_autocmd({"TextChanged", "InsertLeave", "BufEnter"}, {callback = require("clangd_extensions.inlay_hints").set_inlay_hints})
+
+    local group = vim.api.nvim_create_augroup("clangd_no_inlay_hints_in_insert", { clear = true })
+
+    vim.keymap.set("n", "<leader>lh", function()
+        if require("clangd_extensions.inlay_hints").toggle_inlay_hints() then
+            vim.api.nvim_create_autocmd("InsertEnter", { group = group, buffer = buf,
+            callback = require("clangd_extensions.inlay_hints").disable_inlay_hints
+        })
+        vim.api.nvim_create_autocmd({ "TextChanged", "InsertLeave" }, { group = group, buffer = buf,
+            callback = require("clangd_extensions.inlay_hints").set_inlay_hints
+        })
+        else
+            vim.api.nvim_clear_autocmds({ group = group, buffer = buf })
+        end
+        end, { buffer = buf, desc = "[l]sp [h]ints toggle" })
     end
 
-    local lsp_flags = {
-        -- This is the default in Nvim 0.7+
-            debounce_text_changes = 150,
-    }
+local lsp_flags = {
+    -- This is the default in Nvim 0.7+
+    debounce_text_changes = 150,
+}
 
 local lspconfig = require("lspconfig")
 require'lspconfig'.clangd.setup{
     on_attach = on_attach,
     flags = lsp_flags,
 }
-
-require'nvim-tree'.setup()
 
 local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
