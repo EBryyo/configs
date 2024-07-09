@@ -25,8 +25,6 @@ Plug('nvim-lua/plenary.nvim')
 
 Plug('folke/tokyonight.nvim')
 
-Plug('whatyouhide/vim-lengthmatters')
-
 vim.call('plug#end')
 
 
@@ -94,6 +92,8 @@ require'nvim-treesitter.configs'.setup {
     additional_vim_regex_highlighting = false,
 },
 }
+
+require'nvim-tree'.setup()
 
 require'treesitter-context'.setup{
     enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
