@@ -9,6 +9,8 @@ local Plug = vim.fn['plug#']
 
 vim.call('plug#begin')
 
+Plug('alec-gibson/nvim-tetris')
+
 Plug('nvim-tree/nvim-tree.lua')
 
 Plug('nvim-treesitter/nvim-treesitter')
@@ -31,7 +33,6 @@ vim.call('plug#end')
 -- Preferences
 vim.opt.shiftwidth = 4
 vim.opt.tabstop = 4
-vim.opt.mouse = "a"
 vim.opt.showmode = false
 vim.cmd("syntax enable")
 vim.cmd("filetype plugin indent on")
@@ -49,17 +50,18 @@ vim.g.have_nerd_font = true
 vim.opt.cc = "81"
 vim.opt.list = true
 vim.opt.listchars = { tab = "> ", trail = "~" }
-vim.opt.expandtab = true
+vim.opt.expandtab = true 
 
 -- Theme
 vim.cmd.colorscheme("tokyonight-night")
 
 -- PLUGINS
+require'alec-gibson/nvim-tetris'.setup()
 
 -- Treesitter and Treesitter context
 require'nvim-treesitter.configs'.setup {
     -- A list of parser names, or "all" (the five listed parsers should always be installed)
-    ensure_installed = { "c", "cpp", "lua", "vim", "vimdoc", "query" },
+    ensure_installed = { "c", "cpp", "lua", "vim", "vimdoc", "query", "java", "sql"},
     -- Install parsers synchronously (only applied to ensure_installed)
     sync_install = false,
     -- Automatically install missing parsers when entering buffer
