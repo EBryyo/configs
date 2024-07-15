@@ -9,8 +9,6 @@ local Plug = vim.fn['plug#']
 
 vim.call('plug#begin')
 
-Plug('alec-gibson/nvim-tetris')
-
 Plug('nvim-tree/nvim-tree.lua')
 
 Plug('nvim-treesitter/nvim-treesitter')
@@ -56,7 +54,6 @@ vim.opt.expandtab = true
 vim.cmd.colorscheme("tokyonight-night")
 
 -- PLUGINS
-require'alec-gibson/nvim-tetris'.setup()
 
 -- Treesitter and Treesitter context
 require'nvim-treesitter.configs'.setup {
