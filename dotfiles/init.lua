@@ -8,7 +8,7 @@ vim.g.mapleader = " "
 local Plug = vim.fn['plug#']
 
 vim.call('plug#begin')
-
+Plug 'sunjon/stylish.nvim'
 
 Plug('nvim-tree/nvim-tree.lua')
 
@@ -269,25 +269,35 @@ vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 
 -- Screen splitting keymaps
-vim.keymap.set("n", "<leader>s", function()
-        vim.cmd("vert belowright sb 1")
-        end, {})
 
+-- default split
+vim.keymap.set("n", "<leader>s", function()
+        vim.cmd("vsplit")
+        end, {})
+-- vertical split
+vim.keymap.set("n", "<leader>sv", function()
+        vim.cmd("vsplit")
+        end, {})
+-- horizontal split
+vim.keymap.set("n", "<leader>sh", function()
+        vim.cmd("split")
+        end, {})
+-- vertical split with explorer
 vim.keymap.set("n", "<leader>se", function()
-        vim.cmd("vert belowright sb 1")
+        vim.cmd("vsplit")
         builtin.find_files()
         end, {})
-
+-- vertical split with terminal
 vim.keymap.set("n", "<leader>tm", function()
-        vim.cmd("vert belowright sb 1")
+        vim.cmd("vsplit")
         vim.cmd("terminal")
         end, {})
 
 -- Buffer focus keymaps
-vim.keymap.set("n", "<C-h>", "<C-w><C-h>", { desc = "Move focus to the left window" })
-vim.keymap.set("n", "<C-l>", "<C-w><C-l>", { desc = "Move focus to the right window" })
-vim.keymap.set("n", "<C-j>", "<C-w><C-j>", { desc = "Move focus to the lower window" })
-vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper window" })
+vim.keymap.set("n", "<C-h>", "<C-w><C-h>", {})
+vim.keymap.set("n", "<C-l>", "<C-w><C-l>", {})
+vim.keymap.set("n", "<C-j>", "<C-w><C-j>", {})
+vim.keymap.set("n", "<C-k>", "<C-w><C-k>", {})
 
 -- Terminal exit keymaps
 vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", {})
@@ -309,3 +319,5 @@ vim.api.nvim_create_autocmd("TextYankPost", {callback = function()
         vim.highlight.on_yank({higroup='IncSearch', timeout=300})
         end})
 
+vim.cmd("vert belowright sb 1")
+vim.cmd("terminal")
