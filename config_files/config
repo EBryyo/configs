@@ -52,7 +52,7 @@ tiling_drag modifier titlebar
 bindsym $mod+Return exec alacritty
 
 # kill focused window
-bindsym $mod+Shift+a kill
+bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
 bindsym $mod+d exec --no-startup-id dmenu_run
@@ -218,3 +218,9 @@ client.focused          $bgcolor        $bgcolor        $text           $indicat
 client.unfocused        $in-bgcolor     $in-bgcolor     $in-text        $in-bgcolor
 client.focused_inactive $in-bgcolor     $in-bgcolor     $in-text        $in-bgcolor
 client.urgent           $u-bgcolor      $u-bgcolor      $text           $u-bgcolor 
+
+# Resize window with control
+bindsym $mod+Control+Left resize shrink width 5 px or 5 ppt
+bindsym $mod+Control+Down resize grow height 5 px or 5 ppt
+bindsym $mod+Control+Up resize shrink height 5 px or 5 ppt
+bindsym $mod+Control+Right resize grow width 5 px or 5 ppt
