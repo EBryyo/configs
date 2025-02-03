@@ -8,40 +8,37 @@ vim.g.mapleader = " "
 local Plug = vim.fn['plug#']
 
 vim.call('plug#begin')
+
+-- autoclose
+Plug 'm4xshen/autoclose.nvim'
+
+-- transparent
+Plug('xiyaowong/transparent.nvim')
+
+-- themes
 Plug 'sunjon/stylish.nvim'
-
-Plug('nvim-tree/nvim-tree.lua')
-
-Plug('nvim-treesitter/nvim-treesitter')
-
-Plug('neovim/nvim-lspconfig')
-
-Plug('nvim-treesitter/nvim-treesitter-context')
-
-Plug('p00f/clangd_extensions.nvim')
-
-Plug('nvim-telescope/telescope.nvim', {tag = '0.1.8'})
-
-Plug('nvim-lua/plenary.nvim')
-
 Plug('folke/tokyonight.nvim')
 
+-- tree
+Plug('nvim-tree/nvim-tree.lua')
+
+-- parser/LSP/fuzzy finder
+Plug('neovim/nvim-lspconfig')
+Plug('p00f/clangd_extensions.nvim')
+Plug('nvim-telescope/telescope.nvim', {tag = '0.1.8'})
+Plug('nvim-lua/plenary.nvim')
 Plug 'neovim/nvim-lspconfig'
-
 Plug 'hrsh7th/cmp-nvim-lsp'
-
 Plug 'hrsh7th/cmp-buffer'
-
 Plug 'hrsh7th/cmp-path'
-
 Plug 'hrsh7th/cmp-cmdline'
-
 Plug('hrsh7th/nvim-cmp')
 
 vim.call('plug#end')
 
 
 -- Preferences
+vim.wo.relativenumber = true
 vim.opt.shiftwidth = 4
 vim.opt.tabstop = 4
 vim.opt.showmode = false
@@ -61,49 +58,15 @@ vim.g.have_nerd_font = true
 vim.opt.cc = "81"
 vim.opt.list = true
 vim.opt.listchars = { tab = "> ", trail = "~" }
-vim.opt.expandtab = true 
+vim.opt.expandtab = true
 
 -- Theme
 vim.cmd.colorscheme("tokyonight-night")
 
 -- PLUGINS
-
+-- autoclose
+require'autoclose'.setup ({})
 -- Treesitter and Treesitter context
-require'nvim-treesitter.configs'.setup {
-    -- A list of parser names, or "all" (the five listed parsers should always be installed)
-    ensure_installed = { "c", "cpp", "lua", "vim", "vimdoc", "query", "java", "sql"},
-    -- Install parsers synchronously (only applied to ensure_installed)
-    sync_install = false,
-    -- Automatically install missing parsers when entering buffer
-    -- Recommendation: set to false if you don't have tree-sitter CLI installed locally
-    auto_install = false,
-    -- List of parsers to ignore installing (or "all")
-    ignore_install = { },
-    ---- If you need to change the installation directory of the parsers (see -> Advanced Setup)
-    -- parser_install_dir = "/some/path/to/store/parsers", -- Remember to run vim.opt.runtimepath:append("/some/path/to/store/parsers")!
-    highlight = {
-    enable = false,
-
-    -- NOTE: these are the names of the parsers and not the filetype. (for example if you want to
-    -- disable highlighting for the tex filetype, you need to include latex in this list as this is
-    -- the name of the parser)
-    -- list of language that will be disabled
-    disable = { "c", "rust" },
-    -- Or use a function for more flexibility, e.g. to disable slow treesitter highlight for large files
-    disable = function(lang, buf)
-    local max_filesize = 100 * 1024 -- 100 KB
-    local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-        if ok and stats and stats.size > max_filesize then
-        return true
-        end
-    end,
-    -- Setting this to true will run :h syntax and tree-sitter at the same time.
-    -- Set this to true if you depend on 'syntax' being enabled (like for indentation).
-    -- Using this option may slow down your editor, and you may see some duplicate highlights.
-    -- Instead of true it can also be a list of languages
-    additional_vim_regex_highlighting = false,
-},
-}
 
   -- Set up nvim-cmp.
   local cmp = require'cmp'
@@ -174,26 +137,11 @@ require'nvim-treesitter.configs'.setup {
   -- Set up lspconfig.
   local capabilities = require('cmp_nvim_lsp').default_capabilities()
   -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
-  require('lspconfig')['<YOUR_LSP_SERVER>'].setup {
+  require('lspconfig')['clangd'].setup {
     capabilities = capabilities
   }
 
 require'nvim-tree'.setup()
-
-require'treesitter-context'.setup{
-    enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
-    max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
-    min_window_height = 0, -- Minimum editor window height to enable context. Values <= 0 mean no limit.
-    line_numbers = true,
-    multiline_threshold = 20, -- Maximum number of lines to show for a single context
-    trim_scope = 'outer', -- Which context lines to discard if max_lines is exceeded. Choices: 'inner', 'outer'
-    mode = 'cursor',  -- Line used to calculate context. Choices: 'cursor', 'topline'
-    -- Separator between context and content. Should be a single character string, like '-'.
-    -- When separator is set, the context will only show up when there are at least 2 lines above cursorline.
-    separator = nil,
-    zindex = 20, -- The Z-index of the context window
-    on_attach = nil, -- (fun(buf: integer): boolean) return false to disable attaching
-}
 
 -- LSP
 -- Mappings.
@@ -217,7 +165,6 @@ local on_attach = function(client, bufnr)
     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
     vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
     vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
-    vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
     vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, bufopts)
     vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
     vim.keymap.set('n', '<leader>wl', function()
@@ -258,6 +205,7 @@ local lsp_flags = {
 
 local lspconfig = require("lspconfig")
 require'lspconfig'.clangd.setup{
+    root_dir = lspconfig.util.root_pattern('compile_flags.txt', '.git', 'CMakeLists.txt'),
     on_attach = on_attach,
     flags = lsp_flags,
 }
@@ -319,5 +267,5 @@ vim.api.nvim_create_autocmd("TextYankPost", {callback = function()
         vim.highlight.on_yank({higroup='IncSearch', timeout=300})
         end})
 
-vim.cmd("vert belowright sb 1")
-vim.cmd("terminal")
+--vim.cmd("vert belowright sb 1")
+--vim.cmd("terminal")
