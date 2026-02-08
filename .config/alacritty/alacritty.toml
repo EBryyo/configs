@@ -1,0 +1,102 @@
+# ----------------------------
+# Alacritty Configuration
+# ----------------------------
+
+# Set your shell (zsh)
+[terminal.shell]
+program = "/bin/zsh"
+
+# Window settings
+[window]
+padding = { x = 10, y = 10 }
+decorations = "None"
+startup_mode = "Maximized"
+dynamic_title = true
+opacity = 0.95
+
+# Scrolling
+[scrolling]
+history = 10000
+multiplier = 3
+
+# Font configuration
+[font]
+size = 8.0
+
+[font.normal]
+family = "JetBrains Mono"
+style = "Regular"
+
+[font.bold]
+family = "JetBrains Mono"
+style = "Bold"
+
+[font.italic]
+family = "JetBrains Mono"
+style = "Italic"
+
+# Cursor
+[cursor]
+style = { shape = "Block", blinking = "On" }
+blink_interval = 500
+
+# Mouse
+[mouse]
+hide_when_typing = true
+
+
+[colors.primary]
+background = "#162728"   # dark Everforest background
+foreground = "#D3C6AA"   # light text
+
+# Normal colors
+[colors.normal]
+black   = "#2B3339"
+red     = "#E67E80"
+green   = "#A7C080"
+yellow  = "#DBBC7F"
+blue    = "#7FBBB3"
+magenta = "#D699B6"
+cyan    = "#7FBBB3"
+white   = "#D3C6AA"
+
+# Bright colors
+[colors.bright]
+black   = "#5C6773"
+red     = "#E67E80"
+green   = "#A7C080"
+yellow  = "#DBBC7F"
+blue    = "#7FBBB3"
+magenta = "#D699B6"
+cyan    = "#7FBBB3"
+white   = "#F0E7D3"
+
+# Cursor colors
+[colors.cursor]
+text   = "#2B3339"
+cursor = "#D3C6AA"
+
+# Selection colors
+[colors.selection]
+text       = "#D3C6AA"
+background = "#3B4448"
+
+# Transparency (opacity)
+# Key bindings
+[[keyboard.bindings]]
+key = "V"
+mods = "Control|Shift"
+action = "Paste"
+
+[[keyboard.bindings]]
+key = "C"
+mods = "Control|Shift"
+action = "Copy"
+
+[[keyboard.bindings]]
+key = "N"
+mods = "Control|Shift"
+action = "SpawnNewInstance"
+
+[terminal]
+

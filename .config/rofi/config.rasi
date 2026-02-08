@@ -1,0 +1,96 @@
+/* vim: set filetype=css : */
+
+@theme "my"
+
+configuration {
+  font: "JetBrainsMono Nerd Font Medium 18";
+  color: #D3C6AA;
+  show-icons: false;
+
+  drun {
+    display-name: "󰣇";
+  }
+
+  run {
+    display-name: "";
+  }
+
+  window {
+    display-name: "";
+  }
+
+  dmenu {
+    display-name: "󰸌";
+  }
+
+  terminal: "alacritty";
+  disable-history: false;
+}
+
+* {
+  border: 0;
+  margin: -3;
+  padding: 0;
+  spacing: 0;
+  background-color: transparent;
+
+
+}
+
+window {
+  transparency: "real";
+  background-color: @bg-col;
+  border-radius: 8px;
+  padding: 8px;
+  fullscreen: true;
+}
+
+mainbox {
+  padding: 25% 28%;
+  children: [inputbar, listview];
+}
+
+inputbar {
+  border-radius: 8px;
+  background-color: @transparent;
+  children: [prompt, entry];
+  text-color: #D3C6AA;
+}
+
+entry {
+  background-color: inherit;
+  margin: 16px;
+  color: #D3C6AA;
+  placeholder: @placeholder-text;
+  placeholder-color: @placeholder-color;
+}
+
+prompt {
+  background-color: inherit;
+  padding: 16px 16px 16px 30px;
+  color: #D3C6AA;
+}
+
+listview {
+  lines: 5;
+  margin: 8px 0;
+  show-icons: false;
+}
+
+element {
+  margin: 0 16px;
+  border-radius: 5px;
+  children: [element-text];
+  background-color: transparent;
+  text-color: #D3C6AA;
+}
+
+element-text {
+  padding: 16px 16px 16px 64px;
+  text-color: #D3A688;
+}
+
+element-text selected {
+  text-color: #D3C6AA;
+  background-color: @bg-col;
+}

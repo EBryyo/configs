@@ -1,0 +1,17 @@
+% skeleton.tex
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath, amssymb}
+\title{Title Here}
+\author{Elena Souvay}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+% Start writing here
+
+\end{document}
+
